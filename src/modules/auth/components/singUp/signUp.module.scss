@@ -1,0 +1,39 @@
+.signUpform {
+  .formItem {
+    margin-bottom: 10px;
+    input {
+      width: 100%;
+      height: 46px;
+      background-color: unset;
+      border: none;
+      border-radius: 0;
+      border-bottom: 1px solid #000000;
+      padding-right: 10px;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+  .signUpBtn {
+    background-color: #000000;
+    color: #fff;
+    border: none;
+    width: 100%;
+    height: 52px;
+    border-radius: 10px;
+    font-size: 20px;
+    margin-top: 10px;
+  }
+}
+.register {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px;
+  button {
+    color: #000000;
+    background-color: unset;
+    border: 0;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}

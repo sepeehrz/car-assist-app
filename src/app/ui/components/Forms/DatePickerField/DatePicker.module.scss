@@ -1,0 +1,24 @@
+.field {
+  label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    color: #333644;
+  }
+  .input {
+    height: 46px;
+    width: 100%;
+    outline: none;
+    color: #333644;
+    border-radius: 8px;
+    padding-right: 10px;
+    border: 1px solid #efefef;
+    &:focus {
+      border: 1px solid #efefef;
+    }
+    &::placeholder {
+      color: #928e8ecc;
+    }
+  }
+}

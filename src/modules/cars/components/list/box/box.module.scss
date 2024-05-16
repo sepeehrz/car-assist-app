@@ -1,0 +1,35 @@
+.box {
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  .details {
+    width: 80%;
+    .name {
+      font-size: 16px;
+      font-weight: 500;
+      color: #000000;
+    }
+    .detailsWrapper {
+      padding-top: 10px;
+      .detailsItem {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        .detailsTitle {
+          color: #b7b7b8;
+        }
+        .detailsName {
+          color: #333644;
+        }
+      }
+    }
+  }
+  .actions {
+    button {
+      display: block;
+    }
+  }
+}

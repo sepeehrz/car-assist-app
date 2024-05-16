@@ -1,0 +1,39 @@
+.box {
+  background-color: #f9fafb;
+  padding: 10px;
+  border-radius: 10px;
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+  .information {
+    .name {
+      font-size: 16px;
+      color: #333644;
+      font-weight: 500;
+    }
+    .details {
+      padding: 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #eff1f4;
+    }
+  }
+  .description {
+    width: 100%;
+    text-align: left;
+    .text {
+      padding: 10px 0;
+      text-align: justify;
+      color: #333644;
+    }
+    .viewDetails {
+      width: 150px;
+      height: 35px;
+      background-color: #181c2a;
+      color: #fff;
+      border-radius: 10px;
+      margin-top: 30px;
+    }
+  }
+}

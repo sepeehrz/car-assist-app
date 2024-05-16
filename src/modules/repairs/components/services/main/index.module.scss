@@ -1,0 +1,10 @@
+.services {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  > div {
+    width: calc(33.333333% - 10px);
+    height: 100px;
+    margin-bottom: 10px;
+  }
+}

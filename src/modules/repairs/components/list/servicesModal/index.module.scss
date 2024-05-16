@@ -1,0 +1,16 @@
+.servicesWrapper {
+  .title {
+    font-size: 30px;
+    font-weight: 500;
+    border-bottom: 1px solid #e9e9ed;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .servicessss {
+    padding: 30px 10px;
+    max-height: calc(100vh - 66px);
+    overflow: auto;
+  }
+}

@@ -1,0 +1,35 @@
+:root {
+  --font-family: IRANSansX;
+}
+
+html {
+  font-size: 14px;
+  user-select: none;
+  font-family: var(--font-family);
+}
+
+* {
+  box-sizing: border-box;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #797869;
+    border-radius: 10px;
+  }
+}
+body {
+  direction: rtl;
+  text-align: right;
+  margin: 0;
+  background-color: #ffffff;
+}
+
+input,
+textarea,
+select,
+button {
+  font-family: var(--font-family);
+  font-size: 14px;
+}

@@ -1,0 +1,26 @@
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+
+  color: #000000;
+  .title {
+    font-size: 16px;
+  }
+  .back {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    svg {
+      transform: rotate(-180deg);
+    }
+  }
+}
+.sticky {
+  position: sticky;
+  top: 0;
+  background-color: #e9e9ed;
+}

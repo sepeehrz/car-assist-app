@@ -1,0 +1,21 @@
+.list {
+  padding: 16px;
+  .list {
+    > div {
+      &:not(:last-child) {
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
+.addNew {
+  width: 30px;
+  height: 30px;
+  background-color: #181c2a;
+  color: #fff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+}
