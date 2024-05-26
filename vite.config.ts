@@ -8,7 +8,14 @@ const port = 9000;
 
 export default defineConfig({
   server: {
-    port: port
+    port: port,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, '')
+      }
+    }
   },
   plugins: [react(), svgr()],
   resolve: {

@@ -1,13 +1,18 @@
 import style from './login.module.scss';
 import {useNavigate} from 'react-router-dom';
+import {useContext, useEffect} from 'react';
+import AxiosContext from '@app/utils/context/axiosContext';
 
 function Login(props: {changeState: (params: string) => void}) {
+  const axios = useContext(AxiosContext);
   const navigate = useNavigate();
 
   const loginUser = () => {
     navigate('/');
   };
-
+  useEffect(() => {
+    axios.get('/api/services');
+  }, []);
   const changeToRegister = () => {
     props.changeState('register');
   };

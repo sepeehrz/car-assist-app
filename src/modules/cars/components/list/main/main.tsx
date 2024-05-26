@@ -2,6 +2,7 @@ import Box from '../box/box';
 import styles from './main.module.scss';
 import {useNavigate} from 'react-router-dom';
 import TopBar from '@app/ui/components/topBar/topBar';
+// import {useEffect} from 'react';
 
 function CarList() {
   const navigate = useNavigate();
@@ -9,6 +10,15 @@ function CarList() {
   const addNew = () => {
     navigate('/cars/add');
   };
+  // useEffect(() => {
+  //   fetch('/api/services')
+  //     .then(res => {
+  //       return res.json();
+  //     })
+  //     .then(data => {
+  //       console.log(data.message);
+  //     });
+  // }, []);
   return (
     <>
       <TopBar title='لیست وسایل نقلیه' withBack={false}>
