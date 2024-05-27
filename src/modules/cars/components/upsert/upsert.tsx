@@ -1,15 +1,18 @@
+import {useContext, useState} from 'react';
 import styles from './upsert.module.scss';
-import {useState} from 'react';
-
 import TopBar from '@app/ui/components/topBar/topBar';
+import AxiosContext from '@app/utils/context/axiosContext';
 import TextField from '@app/ui/components/Forms/TextField/TextField';
 
 function Upsert() {
+  const request = useContext(AxiosContext);
+
   const [car, setCar] = useState({
     name: '',
     model: '',
     color: '',
-    type: ''
+    type: '',
+    user_id: 1
   });
   const handleInputChange = (field: string, value: string) => {
     setCar(prev => ({
@@ -17,8 +20,10 @@ function Upsert() {
       [field]: value
     }));
   };
-  function save() {
+  async function save() {
     console.log(car);
+    const result = await request.post('/api/cars', car);
+    console.log(result);
   }
   return (
     <>

@@ -1,17 +1,14 @@
+import App from './app';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import '@app/ui/assets/style/app.scss';
-import routes from '../router/routes';
-import AxiosContext from '../utils/context/axiosContext';
+import ReactDOM from 'react-dom/client';
 import AxiosInstance from '../helpers/axios/axios';
-
-const router = createBrowserRouter(routes);
+import AxiosContext from '../utils/context/axiosContext';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <AxiosContext.Provider value={AxiosInstance}>
-      <RouterProvider router={router} />
+      <App />
     </AxiosContext.Provider>
   </React.StrictMode>
 );
