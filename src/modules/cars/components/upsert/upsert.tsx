@@ -1,58 +1,96 @@
-import {useContext, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import styles from './upsert.module.scss';
 import TopBar from '@app/ui/components/topBar/topBar';
 import AxiosContext from '@app/utils/context/axiosContext';
 import TextField from '@app/ui/components/Forms/TextField/TextField';
+import {useNavigate, useParams} from 'react-router-dom';
 
 function Upsert() {
   const request = useContext(AxiosContext);
+  const params = useParams();
+  const navigate = useNavigate();
 
-  const [car, setCar] = useState({
+  const [formData, setFormData] = useState({
     name: '',
     model: '',
     color: '',
-    type: '',
-    user_id: 1
+    type: ''
   });
+
+  const fetchData = async () => {
+    if (params.id) {
+      try {
+        const {data, status} = await request.get(`/api/cars/${params.id}`);
+        if (status === 200) {
+          setFormData({
+            name: data.data.name,
+            model: data.data.model,
+            color: data.data.color,
+            type: data.data.type
+          });
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const handleInputChange = (field: string, value: string) => {
-    setCar(prev => ({
+    setFormData(prev => ({
       ...prev,
       [field]: value
     }));
   };
-  async function save() {
-    console.log(car);
-    const result = await request.post('/api/cars', car);
-    console.log(result);
+
+  async function handleSubmit(e: {preventDefault: () => void}) {
+    e.preventDefault();
+    if (params.id) {
+      const {data, status} = await request.put(
+        `/api/cars/${params.id}`,
+        formData
+      );
+      if (status === 200) {
+        console.log(data);
+        setFormData(data.data);
+      }
+    } else {
+      const {status} = await request.post('/api/cars', formData);
+      if (status === 200) {
+        navigate('/cars');
+      }
+    }
   }
+
   return (
     <>
       <TopBar title='لیست وسایل نقلیه' back='/cars' />
-      <div className={styles.upsert}>
+      <form onSubmit={handleSubmit} className={styles.upsert}>
         <TextField
-          data={car.name}
+          data={formData.name}
           label='نام'
-          passData={e => handleInputChange('name', e)}
+          passData={name => handleInputChange('name', name)}
         />
         <TextField
-          data={car.model}
+          data={formData.model}
           label='مدل'
-          passData={e => handleInputChange('model', e)}
+          passData={model => handleInputChange('model', model)}
         />
         <TextField
-          data={car.color}
+          data={formData.color}
           label='رنگ'
-          passData={e => handleInputChange('color', e)}
+          passData={color => handleInputChange('color', color)}
         />
         <TextField
-          data={car.type}
+          data={formData.type}
           label='نوع'
-          passData={e => handleInputChange('type', e)}
+          passData={type => handleInputChange('type', type)}
         />
-        <button className={styles.addNew} onClick={save}>
-          ذخیره
-        </button>
-      </div>
+        <button className={styles.addNew}>ذخیره</button>
+      </form>
     </>
   );
 }

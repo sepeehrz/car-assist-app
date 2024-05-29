@@ -14,11 +14,13 @@
     border-radius: 8px;
     padding-right: 10px;
     border: 1px solid #efefef;
-    &:focus {
-      border: 1px solid #efefef;
-    }
-    &::placeholder {
-      color: #928e8ecc;
+    input {
+      &:focus {
+        border: 1px solid #efefef;
+      }
+      &::placeholder {
+        color: #928e8ecc;
+      }
     }
   }
 }

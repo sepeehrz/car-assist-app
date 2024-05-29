@@ -11,7 +11,8 @@ const carsRoutes = [
     element: <DefaultLayout />,
     children: [
       {path: '/cars', element: <ListPage />},
-      {path: '/cars/add', element: <UpsertPage />}
+      {path: '/cars/add', element: <UpsertPage />},
+      {path: '/cars/:id', element: <UpsertPage />}
     ]
   }
 ];

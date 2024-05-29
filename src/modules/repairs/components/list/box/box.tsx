@@ -1,24 +1,45 @@
+import {useNavigate} from 'react-router-dom';
 import styles from './box.module.scss';
-
-function RepairsBox() {
+import {serviceType} from '@modules/repairs/enums/index';
+import {dateToPersian, toKm} from '@app/utils/filters/index';
+interface IData {
+  name: string;
+  description: string;
+  serviceDate: string;
+  currentkilometer: string;
+}
+interface IDataForm {
+  data: IData;
+  id: number;
+  service_type: number;
+}
+interface IProps {
+  data: IDataForm;
+}
+function RepairsBox({data}: IProps) {
+  const navigate = useNavigate();
+  function details() {
+    navigate(`/repairs/services/${serviceType[data.service_type]}/${data.id}`);
+  }
   return (
     <>
       <div className={styles.box}>
         <div className={styles.information}>
-          <div className={styles.name}>تعویض روغن</div>
+          <div className={styles.name}>{data.data.name}</div>
           <div className={styles.details}>
-            <div className={styles.date}>1402/02/31</div>
-            <div className={styles.kilometr}>km 250,0000 </div>
+            <div className={styles.date}>
+              {dateToPersian(data.data.serviceDate)}
+            </div>
+            <div className={styles.kilometr}>
+              {toKm(data.data.currentkilometer)}
+            </div>
           </div>
         </div>
         <div className={styles.description}>
-          <div className={styles.text}>
-            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-            استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در
-            ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و
-            کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد
-          </div>
-          <button className={styles.viewDetails}>جزئیات</button>
+          <div className={styles.text}>{data.data.description}</div>
+          <button className={styles.viewDetails} onClick={details}>
+            جزئیات
+          </button>
         </div>
       </div>
     </>

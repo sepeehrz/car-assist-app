@@ -11,19 +11,17 @@ function ModalTest(props: {show: (params: boolean) => void}) {
   return (
     <>
       <Modal>
-        <div className={styles.servicesWrapper}>
-          <div className={styles.title}>
-            <div>سرویس ها</div>
-            <Icons
-              icon='FaTimes'
-              type='FontAwesome'
-              onClick={closeModal}
-              size={20}
-            />
-          </div>
-          <div className={styles.services}>
-            <Services />
-          </div>
+        <div className={styles.title}>
+          <div>سرویس ها</div>
+          <Icons
+            icon='FaTimes'
+            type='FontAwesome'
+            onClick={closeModal}
+            size={20}
+          />
+        </div>
+        <div className={styles.content}>
+          <Services />
         </div>
       </Modal>
     </>

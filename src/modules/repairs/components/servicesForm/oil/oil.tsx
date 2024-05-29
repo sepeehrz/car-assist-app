@@ -1,21 +1,28 @@
-import {useState} from 'react';
 import styles from './oil.module.scss';
 import TopBar from '@app/ui/components/topBar/topBar';
+import {useContext, useEffect, useState} from 'react';
+import AxiosContext from '@app/utils/context/axiosContext';
+import useRepairForm from '@modules/repairs/hooks/useRepairForm';
+import {IServiceData} from '@modules/repairs/hooks/useRepairForm';
 import TextField from '@app/ui/components/Forms/TextField/TextField';
 import TextArea from '@app/ui/components/Forms/TextareaField/Textarea';
 import CheckBox from '@app/ui/components/Forms/CheckBoxField/Checkbox';
 import SelectField from '@app/ui/components/Forms/SelectField/SelectField';
 import DatePicker from '@app/ui/components/Forms/DatePickerField/DatePicker';
+import {Moment} from 'moment';
 
 function OilService() {
-  const [service, setService] = useState({
+  const request = useContext(AxiosContext);
+
+  const [formData, setFormData] = useState<IServiceData>({
     name: '',
     currentkilometer: '',
     nextkilometer: '',
-    serviceDate: '',
+    serviceDate: null,
     carModel: '',
     oilName: '',
     description: '',
+    cost: '',
     tirePressure: false,
     gasFilter: false,
     gearOil: false,
@@ -24,99 +31,105 @@ function OilService() {
     cabinFilter: false,
     oilFilter: false
   });
+  const [carItems, setCarItems] = useState([]);
+  const {saveForm, deleteForm, data} = useRepairForm(formData);
   const handleInputChange = (
     field: string,
-    value: string | number | boolean
+    value: string | number | boolean | undefined | null | Moment
   ) => {
-    setService(prev => ({
+    setFormData(prev => ({
       ...prev,
       [field]: value
     }));
   };
-  const carItems = [
-    {
-      text: '206',
-      value: '212121206'
-    },
-    {
-      text: '207',
-      value: '2121222221207'
-    },
-    {
-      text: 'benz',
-      value: '2121222221benz'
+  useEffect(() => {
+    setFormData(data.data);
+  }, [data]);
+  useEffect(() => {
+    getCarItems();
+  }, []);
+  async function getCarItems() {
+    const {data, status} = await request.get('/api/cars');
+    if (status === 200) {
+      const items = data.data.map((item: {name: string; id: string}) => {
+        return {
+          text: item.name,
+          value: item.id
+        };
+      });
+      setCarItems(items);
     }
-  ];
+  }
   function save() {
-    console.log(service);
+    saveForm();
   }
   return (
     <>
-      <TopBar title='لیست وسایل نقلیه' back='/cars' />
+      <TopBar title='فرم ثبت تعمیرات روغن' back='/repairs' />
       <div className={styles.oilService}>
         <TextField
-          data={service.name}
+          data={formData.name}
           label='نام سرویس'
           placeholder='نام سرویس خود را وارد نمایید'
           passData={e => handleInputChange('name', e)}
         />
         <SelectField
-          data={service.carModel}
+          data={formData.carModel}
           items={carItems}
-          passData={e => handleInputChange('model', e)}
+          passData={e => handleInputChange('carModel', e)}
           label='نام وسیله نقلیه'
           placeholder='نام خودرو خود را انتخاب نمایید'
         />
         <TextField
-          data={service.currentkilometer}
+          data={formData.currentkilometer}
           label='کیلومتر فعلی'
           placeholder='کیلومتر فعلی خود را وارد نمایید'
           passData={e => handleInputChange('currentkilometer', e)}
         />
         <TextField
-          data={service.nextkilometer}
+          data={formData.nextkilometer}
           label='کیلومتر بعدی'
           placeholder='کیلومتر بعدی خود را وارد نمایید'
           passData={e => handleInputChange('nextkilometer', e)}
         />
         <DatePicker
-          data={service.serviceDate}
+          data={formData.serviceDate}
           placeholder='تاریخ سرویس خود را انتخاب نمایید'
           label='تاریخ سرویس'
           passData={e => handleInputChange('serviceDate', e)}
         />
         <TextField
-          data={service.oilName}
+          data={formData.oilName}
           label='نام روغن'
           placeholder='نام روغن خود را وارد نمایید'
           passData={e => handleInputChange('oilName', e)}
         />
         <TextField
-          data={service.oilName}
+          data={formData.cost}
           label='هزینه'
           placeholder='هزینه خود را وارد نمایید'
-          passData={e => handleInputChange('oilName', e)}
+          passData={e => handleInputChange('cost', e)}
         />
         <div className={styles.row}>
           <CheckBox
-            data={service.oil}
+            data={formData.oil}
             label='تعویض روغن'
             passData={e => handleInputChange('oil', e)}
           />
           <CheckBox
-            data={service.airFilter}
+            data={formData.airFilter}
             label='تعویض فیلتر هوا'
             passData={e => handleInputChange('airFilter', e)}
           />
         </div>
         <div className={styles.row}>
           <CheckBox
-            data={service.cabinFilter}
+            data={formData.cabinFilter}
             label='فیلتر کابین'
             passData={e => handleInputChange('cabinFilter', e)}
           />
           <CheckBox
-            data={service.oilFilter}
+            data={formData.oilFilter}
             label='فیلتر روغن'
             passData={e => handleInputChange('oilFilter', e)}
           />
@@ -124,19 +137,19 @@ function OilService() {
 
         <div className={styles.row}>
           <CheckBox
-            data={service.tirePressure}
+            data={formData.tirePressure}
             label='باد لاستیک ها'
             passData={e => handleInputChange('tirePressure', e)}
           />
           <CheckBox
-            data={service.gasFilter}
+            data={formData.gasFilter}
             label='صافی بنزین'
             passData={e => handleInputChange('gasFilter', e)}
           />
         </div>
         <div className={styles.row}>
           <CheckBox
-            data={service.gearOil}
+            data={formData.gearOil}
             label='روغن گیربکس'
             passData={e => handleInputChange('gearOil', e)}
           />
@@ -144,9 +157,12 @@ function OilService() {
         <TextArea
           placeholder='نام روغن خود را وارد نمایید'
           label='توضیحات'
-          data={service.description}
+          data={formData.description}
           passData={e => handleInputChange('description', e)}
         />
+        <button className={styles.removeItem} onClick={deleteForm}>
+          حذف
+        </button>
         <button className={styles.addNew} onClick={save}>
           ذخیره
         </button>

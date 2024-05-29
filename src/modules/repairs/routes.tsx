@@ -11,7 +11,8 @@ const repairsRoutes = [
     element: <DefaultLayout />,
     children: [
       {path: '/repairs', element: <RepairsPage />},
-      {path: '/repairs/services/oil', element: <OilFormPage />}
+      {path: '/repairs/services/oil', element: <OilFormPage />},
+      {path: '/repairs/services/oil/:id', element: <OilFormPage />}
     ]
   }
 ];

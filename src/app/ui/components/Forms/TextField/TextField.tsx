@@ -1,5 +1,6 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import styles from './TextField.module.scss';
+
 function TextField(props: {
   data: string;
   passData: (params: string) => void;
@@ -7,6 +8,12 @@ function TextField(props: {
   placeholder?: string;
 }) {
   const [model, setModel] = useState(props.data);
+
+  useEffect(() => {
+    if (props.data) {
+      setModel(props.data);
+    }
+  }, [props.data]);
 
   function changeData(event: {target: {value: string}}) {
     setModel(event.target.value);

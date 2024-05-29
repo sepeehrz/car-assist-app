@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import styles from './Checkbox.module.scss';
 function TextField(props: {
   data: boolean;
@@ -6,6 +6,12 @@ function TextField(props: {
   label: string;
 }) {
   const [model, setModel] = useState(props.data);
+
+  useEffect(() => {
+    if (props.data) {
+      setModel(props.data);
+    }
+  }, [props.data]);
 
   function handleChange() {
     setModel(!model);

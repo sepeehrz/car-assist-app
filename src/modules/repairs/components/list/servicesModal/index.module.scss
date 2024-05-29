@@ -1,17 +1,15 @@
-.servicesWrapper {
-  .title {
-    font-size: 25px;
-    font-weight: 500;
-    border-bottom: 1px solid #e9e9ed;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .services {
-    padding: 30px 10px;
-    max-height: calc(100vh - 66px);
-    background-color: #eff1f4;
-    overflow: auto;
-  }
+.title {
+  font-size: 25px;
+  font-weight: 500;
+  border-bottom: 1px solid #e9e9ed;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.content {
+  padding: 30px 10px;
+  height: calc(100vh - 59px);
+  background-color: #eff1f4;
+  overflow: auto;
 }

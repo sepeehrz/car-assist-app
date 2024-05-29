@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import styles from './Textarea.module.scss';
 function TextField(props: {
   data: string;
@@ -7,6 +7,10 @@ function TextField(props: {
   placeholder?: string;
 }) {
   const [model, setModel] = useState(props.data);
+
+  useEffect(() => {
+    setModel(props.data);
+  }, [props.data]);
 
   function changeData(event: {target: {value: string}}) {
     setModel(event.target.value);

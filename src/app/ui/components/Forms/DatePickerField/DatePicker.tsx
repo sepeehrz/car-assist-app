@@ -1,30 +1,44 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import moment, {Moment} from 'moment-jalaali';
 import styles from './DatePicker.module.scss';
-import {DatePicker} from 'zaman';
-
-function DatePickerField(props: {
-  data: string;
-  passData: (params: string) => void;
+import 'jalaali-react-date-picker/lib/styles/index.css';
+import {InputDatePicker} from 'jalaali-react-date-picker';
+interface IProps {
+  data: Moment | null | undefined;
   label?: string;
   placeholder?: string;
-}) {
-  const [model, setModel] = useState(props.data);
+  passData: (params: Moment | null | undefined) => void;
+}
 
+function DatePickerField({data, label, placeholder, passData}: IProps) {
+  const [model, setModel] = useState(data);
+  const [open, setOpen] = useState(false);
   const id = `DatePickerField_${new Date().getMilliseconds()}`;
-  function change(e: {value: string}) {
-    setModel(e.value);
-    console.log(model);
-    props.passData(model);
+
+  useEffect(() => {
+    setModel(moment(data));
+  }, [data]);
+
+  function change(date: Moment | null | undefined) {
+    passData(date);
+    setModel(date);
+    setOpen(false);
   }
+  function openCalendar() {
+    setOpen(true);
+  }
+
   return (
     <>
       <div className={styles.field}>
-        <label htmlFor={id}>{props.label}</label>
-
-        <DatePicker
-          inputClass={styles.input}
-          onChange={e => change(e)}
-          inputAttributes={{placeholder: props.placeholder}}
+        <label htmlFor={id}>{label}</label>
+        <InputDatePicker
+          wrapperClassName={styles.input}
+          onClick={openCalendar}
+          placeholder={placeholder}
+          open={open}
+          value={model}
+          onChange={date => change(date)}
         />
       </div>
     </>

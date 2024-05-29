@@ -1,5 +1,5 @@
 import styles from './SelectField.module.scss';
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useState} from 'react';
 
 interface ISelect {
   text: string;
@@ -13,16 +13,20 @@ function SelectField(props: {
   placeholder?: string;
 }) {
   const [openItems, setOpenItems] = useState(false);
+  const [items, setItems] = useState(props.items);
   const [inputValue, setInputValue] = useState('');
-  const model = useRef(props.data);
+  const [model, setModel] = useState(props.data);
 
   useEffect(() => {
+    setModel(props.data);
+    setItems(props.items);
     filterSelectedItemBefore();
-  }, []);
+  }, [props.items, props.data, model]);
+
   function selectItem(data: ISelect) {
     setInputValue(data.text);
-    model.current = data.value;
-    props.passData(model.current);
+    setModel(data.value);
+    props.passData(data.value);
     setOpenItems(false);
   }
 
@@ -31,13 +35,13 @@ function SelectField(props: {
   }
 
   function filterSelectedItemBefore() {
-    if (props.items === undefined) {
+    if (!items || items === undefined) {
       return;
     }
-    if (!model.current) {
+    if (!model) {
       return;
     }
-    const filtered = props.items.filter(item => item.value === model.current);
+    const filtered = items.filter(item => item.value === model);
     const value = Object.assign({}, ...filtered);
     setInputValue(value.text);
   }
@@ -52,7 +56,7 @@ function SelectField(props: {
             name={id}
             id={id}
             type='text'
-            value={inputValue}
+            defaultValue={inputValue}
             onChange={setOnChange}
             placeholder={props.placeholder}
             readOnly
