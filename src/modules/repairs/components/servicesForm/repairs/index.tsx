@@ -1,50 +1,43 @@
-import styles from './oil.module.scss';
+import {Moment} from 'moment';
+import AddItem from './addItem/index';
+import styles from './index.module.scss';
+import {useParams} from 'react-router-dom';
 import TopBar from '@app/ui/components/topBar/topBar';
 import {useContext, useEffect, useState} from 'react';
 import AxiosContext from '@app/utils/context/axiosContext';
 import useRepairForm from '@modules/repairs/hooks/useRepairForm';
-// import {IServiceData} from '@modules/repairs/hooks/useRepairForm';
 import TextField from '@app/ui/components/Forms/TextField/TextField';
 import TextArea from '@app/ui/components/Forms/TextareaField/Textarea';
-import CheckBox from '@app/ui/components/Forms/CheckBoxField/Checkbox';
 import SelectField from '@app/ui/components/Forms/SelectField/SelectField';
 import DatePicker from '@app/ui/components/Forms/DatePickerField/DatePicker';
-import {Moment} from 'moment';
-import {useParams} from 'react-router-dom';
+
+export interface IData {
+  name: string;
+  typeRepair: number | string;
+  reasonDescription: string;
+  description: string;
+}
 interface IServiceData {
   name: string;
   currentkilometer: string;
   nextkilometer: string;
   serviceDate: Moment | null | undefined;
   carModel: string;
-  oilName: string;
   cost: string;
   description: string;
-  tirePressure: boolean;
-  gasFilter: boolean;
-  gearOil: boolean;
-  oil: boolean;
-  airFilter: boolean;
-  cabinFilter: boolean;
-  oilFilter: boolean;
+  data: IData[];
 }
-function OilService() {
+
+function RepairFOrm() {
   const [formData, setFormData] = useState<IServiceData>({
     name: '',
     currentkilometer: '',
     nextkilometer: '',
     serviceDate: null,
     carModel: '',
-    oilName: '',
     description: '',
     cost: '',
-    tirePressure: false,
-    gasFilter: false,
-    gearOil: false,
-    oil: false,
-    airFilter: false,
-    cabinFilter: false,
-    oilFilter: false
+    data: []
   });
   const request = useContext(AxiosContext);
   const [carItems, setCarItems] = useState([]);
@@ -78,12 +71,20 @@ function OilService() {
       setCarItems(items);
     }
   }
+  function getRepairFormData(params: IData[]) {
+    setFormData(prev => ({
+      ...prev,
+      data: params
+    }));
+  }
   function save() {
+    console.log(formData);
     saveForm();
   }
+
   return (
     <>
-      <TopBar title='تعویض روغن' back='/repairs' />
+      <TopBar title='تعویض قطعات' back='/repairs' />
       <div className={styles.oilService}>
         <TextField
           data={formData.name}
@@ -117,73 +118,26 @@ function OilService() {
           passData={e => handleInputChange('serviceDate', e)}
         />
         <TextField
-          data={formData.oilName}
-          label='نام روغن'
-          placeholder='نام روغن خود را وارد نمایید'
-          passData={e => handleInputChange('oilName', e)}
-        />
-        <TextField
           data={formData.cost}
           label='هزینه'
           placeholder='هزینه خود را وارد نمایید'
           passData={e => handleInputChange('cost', e)}
         />
-        <div className={styles.row}>
-          <CheckBox
-            data={formData.oil}
-            label='تعویض روغن'
-            passData={e => handleInputChange('oil', e)}
-          />
-          <CheckBox
-            data={formData.airFilter}
-            label='تعویض فیلتر هوا'
-            passData={e => handleInputChange('airFilter', e)}
-          />
-        </div>
-        <div className={styles.row}>
-          <CheckBox
-            data={formData.cabinFilter}
-            label='فیلتر کابین'
-            passData={e => handleInputChange('cabinFilter', e)}
-          />
-          <CheckBox
-            data={formData.oilFilter}
-            label='فیلتر روغن'
-            passData={e => handleInputChange('oilFilter', e)}
-          />
-        </div>
-
-        <div className={styles.row}>
-          <CheckBox
-            data={formData.tirePressure}
-            label='باد لاستیک ها'
-            passData={e => handleInputChange('tirePressure', e)}
-          />
-          <CheckBox
-            data={formData.gasFilter}
-            label='صافی بنزین'
-            passData={e => handleInputChange('gasFilter', e)}
-          />
-        </div>
-        <div className={styles.row}>
-          <CheckBox
-            data={formData.gearOil}
-            label='روغن گیربکس'
-            passData={e => handleInputChange('gearOil', e)}
-          />
-        </div>
         <TextArea
           placeholder='توضیحات خود را وارد نمایید'
           label='توضیحات'
           data={formData.description}
           passData={e => handleInputChange('description', e)}
         />
+        <AddItem
+          passData={params => getRepairFormData(params)}
+          data={formData.data}
+        />
         {params.id && (
           <button className={styles.removeItem} onClick={deleteForm}>
             حذف
           </button>
         )}
-
         <button className={styles.addNew} onClick={save}>
           ذخیره
         </button>
@@ -192,4 +146,4 @@ function OilService() {
   );
 }
 
-export default OilService;
+export default RepairFOrm;

@@ -1,36 +1,18 @@
-import {Moment} from 'moment';
 import {useContext, useEffect, useState} from 'react';
 import AxiosContext from '@app/utils/context/axiosContext';
 import {useSearchParams, useParams, useNavigate} from 'react-router-dom';
 
-export interface IServiceData {
-  name: string;
-  currentkilometer: string;
-  nextkilometer: string;
-  serviceDate: Moment | null | undefined;
-  carModel: string;
-  oilName: string;
-  cost: string;
-  description: string;
-  tirePressure: boolean;
-  gasFilter: boolean;
-  gearOil: boolean;
-  oil: boolean;
-  airFilter: boolean;
-  cabinFilter: boolean;
-  oilFilter: boolean;
-}
-function useRepairForm(form: IServiceData) {
+function useRepairForm(form: {carModel: number | string}) {
   const request = useContext(AxiosContext);
   const params = useParams();
   const navigate = useNavigate();
   const [query] = useSearchParams();
   const [data, setData] = useState<{
     service_type?: number;
-    data: IServiceData;
+    data: object;
     car_id: number;
   }>({
-    data: {} as IServiceData,
+    data: {},
     car_id: 1
   });
   const fetchData = async () => {

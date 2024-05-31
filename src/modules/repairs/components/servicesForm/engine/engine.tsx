@@ -1,50 +1,42 @@
-import styles from './oil.module.scss';
+import {Moment} from 'moment';
+import styles from './engine.module.scss';
+import {useParams} from 'react-router-dom';
 import TopBar from '@app/ui/components/topBar/topBar';
 import {useContext, useEffect, useState} from 'react';
 import AxiosContext from '@app/utils/context/axiosContext';
 import useRepairForm from '@modules/repairs/hooks/useRepairForm';
-// import {IServiceData} from '@modules/repairs/hooks/useRepairForm';
 import TextField from '@app/ui/components/Forms/TextField/TextField';
 import TextArea from '@app/ui/components/Forms/TextareaField/Textarea';
 import CheckBox from '@app/ui/components/Forms/CheckBoxField/Checkbox';
 import SelectField from '@app/ui/components/Forms/SelectField/SelectField';
 import DatePicker from '@app/ui/components/Forms/DatePickerField/DatePicker';
-import {Moment} from 'moment';
-import {useParams} from 'react-router-dom';
+
 interface IServiceData {
   name: string;
   currentkilometer: string;
   nextkilometer: string;
   serviceDate: Moment | null | undefined;
   carModel: string;
-  oilName: string;
   cost: string;
   description: string;
-  tirePressure: boolean;
-  gasFilter: boolean;
-  gearOil: boolean;
-  oil: boolean;
-  airFilter: boolean;
-  cabinFilter: boolean;
-  oilFilter: boolean;
+  injectorWash: boolean;
+  filler: boolean;
+  diag: boolean;
+  gasWashing: boolean;
 }
-function OilService() {
+function EngineService() {
   const [formData, setFormData] = useState<IServiceData>({
     name: '',
     currentkilometer: '',
     nextkilometer: '',
     serviceDate: null,
     carModel: '',
-    oilName: '',
     description: '',
     cost: '',
-    tirePressure: false,
-    gasFilter: false,
-    gearOil: false,
-    oil: false,
-    airFilter: false,
-    cabinFilter: false,
-    oilFilter: false
+    injectorWash: false,
+    filler: false,
+    diag: false,
+    gasWashing: false
   });
   const request = useContext(AxiosContext);
   const [carItems, setCarItems] = useState([]);
@@ -83,7 +75,7 @@ function OilService() {
   }
   return (
     <>
-      <TopBar title='تعویض روغن' back='/repairs' />
+      <TopBar title='سرویس دوره ای موتور' back='/repairs' />
       <div className={styles.oilService}>
         <TextField
           data={formData.name}
@@ -117,12 +109,6 @@ function OilService() {
           passData={e => handleInputChange('serviceDate', e)}
         />
         <TextField
-          data={formData.oilName}
-          label='نام روغن'
-          placeholder='نام روغن خود را وارد نمایید'
-          passData={e => handleInputChange('oilName', e)}
-        />
-        <TextField
           data={formData.cost}
           label='هزینه'
           placeholder='هزینه خود را وارد نمایید'
@@ -130,46 +116,26 @@ function OilService() {
         />
         <div className={styles.row}>
           <CheckBox
-            data={formData.oil}
-            label='تعویض روغن'
-            passData={e => handleInputChange('oil', e)}
+            data={formData.injectorWash}
+            label='شستشوی انژکتور'
+            passData={e => handleInputChange('injectorWash', e)}
           />
           <CheckBox
-            data={formData.airFilter}
-            label='تعویض فیلتر هوا'
-            passData={e => handleInputChange('airFilter', e)}
-          />
-        </div>
-        <div className={styles.row}>
-          <CheckBox
-            data={formData.cabinFilter}
-            label='فیلتر کابین'
-            passData={e => handleInputChange('cabinFilter', e)}
-          />
-          <CheckBox
-            data={formData.oilFilter}
-            label='فیلتر روغن'
-            passData={e => handleInputChange('oilFilter', e)}
-          />
-        </div>
-
-        <div className={styles.row}>
-          <CheckBox
-            data={formData.tirePressure}
-            label='باد لاستیک ها'
-            passData={e => handleInputChange('tirePressure', e)}
-          />
-          <CheckBox
-            data={formData.gasFilter}
-            label='صافی بنزین'
-            passData={e => handleInputChange('gasFilter', e)}
+            data={formData.filler}
+            label='فیلر گیری'
+            passData={e => handleInputChange('filler', e)}
           />
         </div>
         <div className={styles.row}>
           <CheckBox
-            data={formData.gearOil}
-            label='روغن گیربکس'
-            passData={e => handleInputChange('gearOil', e)}
+            data={formData.diag}
+            label='دیاگ'
+            passData={e => handleInputChange('diag', e)}
+          />
+          <CheckBox
+            data={formData.gasWashing}
+            label='شستشوی گاز'
+            passData={e => handleInputChange('gasWashing', e)}
           />
         </div>
         <TextArea
@@ -192,4 +158,4 @@ function OilService() {
   );
 }
 
-export default OilService;
+export default EngineService;

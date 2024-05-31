@@ -10,22 +10,16 @@ function Services() {
       serviceType: 1
     },
     {
-      text: 'پروفایل',
-      icon: 'FaOilCan',
-      to: '/profile',
+      text: 'سرویس موتور',
+      icon: 'FaCar',
+      to: '/repairs/services/engine',
       serviceType: 2
     },
     {
       text: 'تعمیرات',
-      icon: 'FaOilCan',
-      to: '/repairs',
+      icon: 'FaTools',
+      to: '/repairs/services/others',
       serviceType: 3
-    },
-    {
-      text: 'ماشین‌ها',
-      icon: 'FaOilCan',
-      to: '/cars',
-      serviceType: 4
     }
   ];
   return (

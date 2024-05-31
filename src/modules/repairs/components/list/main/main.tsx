@@ -28,16 +28,19 @@ function RepairServices() {
 
   return (
     <>
-      <TopBar title='لیست وسایل نقلیه' withBack={false}>
+      <TopBar title='لیست تعمیرات وسایل نقلیه' withBack={false}>
         <button className={styles.addNew} onClick={addService}>
           +
         </button>
       </TopBar>
       <div className={styles.list}>
         <Filters />
-        {services.map((item, index) => (
-          <Box key={index} data={item} />
-        ))}
+        {services && services.length !== 0 ? (
+          services.map((item, index) => <Box key={index} data={item} />)
+        ) : (
+          <div className='no-result'>آیتمی یافت نشد</div>
+        )}
+        {}
       </div>
       {showServiceModal && <ServicesModal show={setShowServiceModal} />}
     </>

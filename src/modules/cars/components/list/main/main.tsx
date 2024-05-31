@@ -31,9 +31,11 @@ function CarList() {
       </TopBar>
       <div className={styles.cars}>
         <div className={styles.list}>
-          {cars.map((item, index) => (
-            <Box key={index} data={item} />
-          ))}
+          {cars && cars.length !== 0 ? (
+            cars.map((item, index) => <Box key={index} data={item} />)
+          ) : (
+            <div className='no-result'>آیتمی یافت نشد</div>
+          )}
         </div>
       </div>
     </>
