@@ -37,7 +37,7 @@ function Navigation() {
                 [styles.navItem, isActive ? styles.active : ''].join(' ')
               }>
               <div className={styles.navItemIcon}>
-                <SvgLoader name={item.icon} stroke='#585858' />
+                <SvgLoader name={item.icon} stroke='#000' />
               </div>
               <div className={styles.navItemName}>{item.text}</div>
             </NavLink>

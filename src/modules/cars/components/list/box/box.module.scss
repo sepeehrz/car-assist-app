@@ -1,9 +1,11 @@
 .box {
-  background-color: #f8f8f8;
+  background-color: $purple_3;
   border-radius: 10px;
   padding: 10px;
   display: flex;
   justify-content: space-between;
+  box-shadow: 0px 0px 2px 0px rgba(166, 177, 225, 1);
+
   .details {
     width: 80%;
     .name {
@@ -30,7 +32,7 @@
   .actions {
     .icon {
       display: block;
-      background-color: #904be9;
+      background-color: $primary_color;
       color: #fff;
       width: 25px;
       height: 25px;

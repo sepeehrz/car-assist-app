@@ -1,5 +1,5 @@
 import Box from '../box/box';
-import Filters from '../filters/filters';
+// import Filters from '../filters/filters';
 import styles from './main.module.scss';
 import TopBar from '@app/ui/components/topBar/topBar';
 import ServicesModal from '../servicesModal/index';
@@ -34,7 +34,7 @@ function RepairServices() {
         </button>
       </TopBar>
       <div className={styles.list}>
-        <Filters />
+        {/* <Filters /> */}
         {services && services.length !== 0 ? (
           services.map((item, index) => <Box key={index} data={item} />)
         ) : (

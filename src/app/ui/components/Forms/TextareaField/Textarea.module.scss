@@ -15,7 +15,7 @@
     padding-right: 10px;
     border: 1px solid #efefef;
     &:focus {
-      border: 1px solid #efefef;
+      border: 1px solid $primary_color;
     }
     &::placeholder {
       color: #928e8ecc;

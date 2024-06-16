@@ -1,16 +1,17 @@
+import {Moment} from 'moment';
 import styles from './oil.module.scss';
+import {useParams} from 'react-router-dom';
+import Icons from '@app/ui/components/Icons';
 import TopBar from '@app/ui/components/topBar/topBar';
 import {useContext, useEffect, useState} from 'react';
 import AxiosContext from '@app/utils/context/axiosContext';
 import useRepairForm from '@modules/repairs/hooks/useRepairForm';
-// import {IServiceData} from '@modules/repairs/hooks/useRepairForm';
 import TextField from '@app/ui/components/Forms/TextField/TextField';
 import TextArea from '@app/ui/components/Forms/TextareaField/Textarea';
 import CheckBox from '@app/ui/components/Forms/CheckBoxField/Checkbox';
 import SelectField from '@app/ui/components/Forms/SelectField/SelectField';
 import DatePicker from '@app/ui/components/Forms/DatePickerField/DatePicker';
-import {Moment} from 'moment';
-import {useParams} from 'react-router-dom';
+
 interface IServiceData {
   name: string;
   currentkilometer: string;
@@ -83,7 +84,18 @@ function OilService() {
   }
   return (
     <>
-      <TopBar title='تعویض روغن' back='/repairs' />
+      <TopBar title='تعویض روغن' back='/repairs'>
+        {params.id && (
+          <button className={styles.removeItem}>
+            <Icons
+              icon='FaRegTrashAlt'
+              type='FontAwesome'
+              onClick={deleteForm}
+              size={20}
+            />
+          </button>
+        )}
+      </TopBar>
       <div className={styles.oilService}>
         <TextField
           data={formData.name}
@@ -178,13 +190,7 @@ function OilService() {
           data={formData.description}
           passData={e => handleInputChange('description', e)}
         />
-        {params.id && (
-          <button className={styles.removeItem} onClick={deleteForm}>
-            حذف
-          </button>
-        )}
-
-        <button className={styles.addNew} onClick={save}>
+        <button className={styles.save} onClick={save}>
           ذخیره
         </button>
       </div>

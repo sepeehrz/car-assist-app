@@ -5,15 +5,16 @@
       margin-bottom: 10px;
     }
   }
-  .addNew {
+  .save {
     width: 100%;
     height: 56px;
-    background-color: #181c2a;
+    background-color: $primary_color;
     color: #fff;
     border-radius: 10px;
     line-height: 27px;
     vertical-align: middle;
     text-align: center;
     margin-left: 10px;
+    border: none;
   }
 }

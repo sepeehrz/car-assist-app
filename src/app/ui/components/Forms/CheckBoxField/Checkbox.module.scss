@@ -46,7 +46,7 @@
       cursor: pointer;
       &:checked {
         border: 1px solid #ccc;
-        background-color: #495057;
+        background-color: $primary-color;
       }
     }
   }

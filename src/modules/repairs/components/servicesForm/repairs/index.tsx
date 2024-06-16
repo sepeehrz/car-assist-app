@@ -10,6 +10,7 @@ import TextField from '@app/ui/components/Forms/TextField/TextField';
 import TextArea from '@app/ui/components/Forms/TextareaField/Textarea';
 import SelectField from '@app/ui/components/Forms/SelectField/SelectField';
 import DatePicker from '@app/ui/components/Forms/DatePickerField/DatePicker';
+import Icons from '@app/ui/components/Icons';
 
 export interface IData {
   name: string;
@@ -84,7 +85,18 @@ function RepairFOrm() {
 
   return (
     <>
-      <TopBar title='تعویض قطعات' back='/repairs' />
+      <TopBar title='تعویض قطعات' back='/repairs'>
+        {params.id && (
+          <button className={styles.removeItem}>
+            <Icons
+              icon='FaRegTrashAlt'
+              type='FontAwesome'
+              onClick={deleteForm}
+              size={20}
+            />
+          </button>
+        )}
+      </TopBar>
       <div className={styles.oilService}>
         <TextField
           data={formData.name}
@@ -133,12 +145,7 @@ function RepairFOrm() {
           passData={params => getRepairFormData(params)}
           data={formData.data}
         />
-        {params.id && (
-          <button className={styles.removeItem} onClick={deleteForm}>
-            حذف
-          </button>
-        )}
-        <button className={styles.addNew} onClick={save}>
+        <button className={styles.save} onClick={save}>
           ذخیره
         </button>
       </div>

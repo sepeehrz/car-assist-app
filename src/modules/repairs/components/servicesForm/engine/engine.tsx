@@ -10,6 +10,7 @@ import TextArea from '@app/ui/components/Forms/TextareaField/Textarea';
 import CheckBox from '@app/ui/components/Forms/CheckBoxField/Checkbox';
 import SelectField from '@app/ui/components/Forms/SelectField/SelectField';
 import DatePicker from '@app/ui/components/Forms/DatePickerField/DatePicker';
+import Icons from '@app/ui/components/Icons';
 
 interface IServiceData {
   name: string;
@@ -75,7 +76,18 @@ function EngineService() {
   }
   return (
     <>
-      <TopBar title='سرویس دوره ای موتور' back='/repairs' />
+      <TopBar title='سرویس دوره ای موتور' back='/repairs'>
+        {params.id && (
+          <button className={styles.removeItem}>
+            <Icons
+              icon='FaRegTrashAlt'
+              type='FontAwesome'
+              onClick={deleteForm}
+              size={20}
+            />
+          </button>
+        )}
+      </TopBar>
       <div className={styles.oilService}>
         <TextField
           data={formData.name}
@@ -144,13 +156,7 @@ function EngineService() {
           data={formData.description}
           passData={e => handleInputChange('description', e)}
         />
-        {params.id && (
-          <button className={styles.removeItem} onClick={deleteForm}>
-            حذف
-          </button>
-        )}
-
-        <button className={styles.addNew} onClick={save}>
+        <button className={styles.save} onClick={save}>
           ذخیره
         </button>
       </div>

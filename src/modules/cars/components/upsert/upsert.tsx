@@ -89,7 +89,7 @@ function Upsert() {
           label='نوع'
           passData={type => handleInputChange('type', type)}
         />
-        <button className={styles.addNew}>ذخیره</button>
+        <button className={styles.save}>ذخیره</button>
       </form>
     </>
   );
